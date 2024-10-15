@@ -1,6 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js"; // Import the database connection
+import returnsRoute from "./routes/return.route.js"; // Updated to use the correct returns route
+import salesRoute from "./routes/sales.route.js"; // Updated to use the correct returns route
+import route from "./routes/user.route.js";
+import cust from "./routes/customer.route.js";
+import Delivery from "./routes/delivery.route.js";
 
 dotenv.config(); // Load environment variables
 
@@ -14,9 +19,17 @@ app.use(express.json());
 connectDB();
 
 // Basic home route
-app.get("/", (req, res) => {
-  res.send("API is running...");
-});
+// app.get("/", (req, res) => {
+//   res.send("API is running...");
+// });
+
+app.use("/api/returns", returnsRoute); // Updated to use 'returnsRoute'
+app.use("/api/sales", salesRoute);
+
+//Delivery
+app.use("/api/user", route);
+app.use("/api/cust", cust);
+app.use("/api/deliv", Delivery);
 
 // Error handling middleware (optional, can expand it)
 app.use((err, req, res, next) => {
